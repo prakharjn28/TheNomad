@@ -1,6 +1,6 @@
 import 'package:TheNomad/main.dart';
 import 'package:go_router/go_router.dart';
-import 'package:TheNomad/screens/homepageview.dart';
+import 'package:TheNomad/screens/homesearchview.dart';
 import 'package:TheNomad/screens/details.dart';
 
 
