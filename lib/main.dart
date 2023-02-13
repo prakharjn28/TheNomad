@@ -1,6 +1,13 @@
+import 'package:TheNomad/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:TheNomad/provider/loginProvider.dart';
+
+final _router = GoRouter(
+    initialLocation: '/home',
+    routes: routes
+);
 
 void main() {
   runApp(MultiProvider(providers: [
@@ -15,12 +22,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'The Nomad',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'The Nomad'),
+      //home: const MyHomePage(title: 'The Nomad'),
+      routerConfig: _router,
     );
   }
 }
@@ -50,6 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.search),
+        onPressed: () => context.push('/search'),
+
       ),
     );
   }
