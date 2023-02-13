@@ -1,11 +1,19 @@
-import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'screens/homepageview.dart';
+import 'screens/details.dart';
 
-class Routes {
-  Routes._(); //this is to prevent anyone from instantiate this object
 
-  // static const String createTask = '/createTask'; // Create const like this
+const _title = "Searching Page";
 
-  static final routes = <String, WidgetBuilder>{
-    // Add routes here
-  };
-}
+final routes = [
+  GoRoute(
+    path: '/home',
+    builder: (context, state) => const MySearchPage(title: _title),
+  ),
+  GoRoute(
+      path: '/details',
+      builder: (context, state) {
+        return DetailsPage(title: state.queryParams['states']);
+      }
+  ),
+];
