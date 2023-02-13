@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatelessWidget {
-  DetailsPage({super.key, required this.title});
+  const DetailsPage({super.key, required this.title});
   final String? title;
 
   @override
