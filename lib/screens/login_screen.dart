@@ -93,8 +93,7 @@ class _LoginState extends State<Login> {
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
                 onPressed: () {
-                  // print(emailController.text);
-                  // print(passwordController.text);
+                  context.pushReplacement('/search');
                 },
               ),
             ),
