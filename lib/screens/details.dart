@@ -1,7 +1,8 @@
 /*
 * Author: Giao U
 * Page: this detail page is to show the picked location
-* */
+*
+*/
 import 'package:flutter/material.dart';
 
 class DetailsPage extends StatelessWidget {
