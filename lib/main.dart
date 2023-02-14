@@ -1,27 +1,14 @@
+import 'package:TheNomad/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:nomad/screen/login_screen.dart';
-import 'package:nomad/screen/signup_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:TheNomad/provider/loginProvider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (_) => LoginProvider()),
+    // We can add more providers as we move forward with the app.
+  ], child: const MyApp()));
 }
-
-final _routes = GoRouter(
-  initialLocation: '/login',
-  routes: [
-    GoRoute(
-      name: "loginScreen",
-      path: '/login',
-      builder: (context, state) => const Login(),
-    ),
-    GoRoute(
-      name: "signUpScreen",
-      path: '/signup',
-      builder: (context, state) => const SignUpScreen(),
-    )
-  ],
-);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -29,8 +16,41 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerConfig: _routes,
+      title: 'The Nomad',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      routerConfig: Routes.routes,
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  final String title;
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const <Widget>[
+            Text(
+              'The Nomad Home screen',
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
