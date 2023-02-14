@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "721464880893",
+    "project_id": "thenomad-2f01b",
+    "storage_bucket": "thenomad-2f01b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:721464880893:android:ec0b9656f23608093a1894",
+        "android_client_info": {
+          "package_name": "com.example.the_nomad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "721464880893-6aqkcfprvqr4pmojinftgfldsmch78sd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqSdj_714vmSKOSzhvp31msFlLY25wVI4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "721464880893-6aqkcfprvqr4pmojinftgfldsmch78sd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,8 @@
+import 'package:TheNomad/models/loginModel.dart';
+import 'package:TheNomad/provider/loginProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -19,6 +22,18 @@ class _LoginState extends State<Login> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
+  }
+
+  void loginUser() async{
+    var loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    LoginModel user = LoginModel(email: emailController.text, password: passwordController.text);
+    loginProvider.signInUser(user);
+    // context.pushReplacement('/search');
+  }
+
+  void logout() {
+    var loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    loginProvider.signOut();
   }
 
   @override
@@ -76,6 +91,7 @@ class _LoginState extends State<Login> {
             ),
             TextButton(
               onPressed: () {
+                logout();
                 // forgot password screen
               },
               child: const Text(
@@ -93,7 +109,7 @@ class _LoginState extends State<Login> {
                   style: TextStyle(color: Colors.white, fontSize: 25),
                 ),
                 onPressed: () {
-                  context.pushReplacement('/search');
+                  loginUser();
                 },
               ),
             ),
