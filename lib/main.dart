@@ -7,12 +7,12 @@ import 'package:TheNomad/provider/loginProvider.dart';
 import 'firebase_options.dart';
 // ...
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+  // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => LoginProvider()),

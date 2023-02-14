@@ -24,11 +24,12 @@ class _LoginState extends State<Login> {
     passwordController.dispose();
   }
 
-  void loginUser() async{
+  void loginUser() async {
     var loginProvider = Provider.of<LoginProvider>(context, listen: false);
-    LoginModel user = LoginModel(email: emailController.text, password: passwordController.text);
+    LoginModel user = LoginModel(
+        email: emailController.text, password: passwordController.text);
     loginProvider.signInUser(user);
-    // context.pushReplacement('/search');
+    context.pushReplacement('/search');
   }
 
   void logout() {
