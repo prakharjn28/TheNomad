@@ -10,11 +10,10 @@ import 'package:go_router/go_router.dart';
 
 import 'main.dart';
 
+bool status = false;
+
 class Routes {
   Routes._(); //this is to prevent anyone from instantiate this object
-  bool status = false;
-
-  Routes({this.status = false});
 
   void initState() {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
@@ -35,9 +34,9 @@ class Routes {
   static const String details = '/details';
 
   static const _title = "Searching Page";
-  static const _homeTitle = "Home Page";
+
   static final routes = GoRouter(
-    initialLocation: login,
+    initialLocation: status ? search : login,
     routes: [
       GoRoute(
         name: "loginScreen",
@@ -55,7 +54,7 @@ class Routes {
       ),
       GoRoute(
         path: home,
-        builder: (context, state) => const MyHomePage(title: _homeTitle),
+        builder: (context, state) => const MyApp(),
       ),
       GoRoute(
           path: details,

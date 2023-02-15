@@ -5,24 +5,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 class LoginProvider extends ChangeNotifier {
   // Check the values and authenticate it and return the token
 
-  void signInUser(LoginModel user) async {
+  signInUser(LoginModel user) async {
+    var error;
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      var result = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: user.email!, password: user.password!);
-      print(
-        "credentials $credential",
-      );
+      error = "Success";
     } on FirebaseAuthException catch (e) {
-      print("firebase err $e");
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        error = "No user found for that email.";
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        error = "Wrong password provided for that user.";
       }
     } catch (e) {
-      print("error $e");
+      error = e;
     }
     notifyListeners();
+    return error;
   }
 
   Future<void> signOut() async {
