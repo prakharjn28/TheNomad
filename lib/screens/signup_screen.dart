@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final _formKey = GlobalKey<FormState>();
+  bool _isValid = false;
+
+  void _saveForm() {
+    setState(() {
+      _isValid = _formKey.currentState!.validate();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('Sign Up'),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: SizedBox(
@@ -22,7 +39,7 @@ class SignUpScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: const [
                         Padding(
-                          padding: EdgeInsets.symmetric(vertical: 20),
+                          padding: EdgeInsets.symmetric(vertical: 10),
                         ),
                         Text(
                           "Create your account",
@@ -37,17 +54,20 @@ class SignUpScreen extends StatelessWidget {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40),
-                      child: Column(
-                        children: [
-                          makeInput(label: "First name"),
-                          makeInput(label: "Last Name"),
-                          makeInput(label: "Email"),
-                          makeInput(label: "Password", obsureText: true),
-                          makeInput(label: "Confirm Pasword", obsureText: true)
-                        ],
-                      ),
-                    ),
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            children: [
+                              makeInput(label: "First name"),
+                              makeInput(label: "Last Name"),
+                              makeInput(label: "Email"),
+                              makeInput(label: "Password", obsureText: true),
+                              makeInput(
+                                  label: "Confirm Pasword", obsureText: true)
+                            ],
+                          ),
+                        )),
                     Container(
                       height: 50,
                       width: 250,
@@ -110,7 +130,7 @@ Widget makeInput({label, obsureText = false}) {
         ),
       ),
       const SizedBox(
-        height: 30,
+        height: 25,
       )
     ],
   );
