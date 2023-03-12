@@ -1,11 +1,8 @@
-import 'dart:ffi';
-
 import 'package:TheNomad/screens/details.dart';
 import 'package:TheNomad/screens/homesearchview.dart';
 import 'package:TheNomad/screens/login_screen.dart';
 import 'package:TheNomad/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'main.dart';
