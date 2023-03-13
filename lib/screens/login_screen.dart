@@ -29,29 +29,31 @@ class _LoginState extends State<Login> {
   void loginUser() async {
     var loginProvider = Provider.of<LoginProvider>(context, listen: false);
     _saveForm();
-    if (_isValid) {
-      LoginModel user = LoginModel(
-          email: emailController.text, password: passwordController.text);
-      loginProvider.signInUser(user).then((e) => {
-            if (e == "Success")
-              {context.pushReplacement('/search')}
-            else
-              {
-                showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: Text(e),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, 'OK'),
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  ),
-                )
-              }
-          });
-    }
+    context.pushReplacement('/locationDetails');
+    // if (_isValid) {
+    //   LoginModel user = LoginModel(
+    //       email: emailController.text, password: passwordController.text);
+    //   loginProvider.signInUser(user).then((e) => {
+    //         if (e == "Success")
+    //           {context.pushReplacement('/search')}
+    //         else
+    //           {
+    //             print("err $e"),
+    //             showDialog<String>(
+    //               context: context,
+    //               builder: (BuildContext context) => AlertDialog(
+    //                 title: Text(e.toString()),
+    //                 actions: <Widget>[
+    //                   TextButton(
+    //                     onPressed: () => Navigator.pop(context, 'OK'),
+    //                     child: const Text('OK'),
+    //                   ),
+    //                 ],
+    //               ),
+    //             )
+    //           }
+    //       });
+    // }
   }
 
   void logout() {

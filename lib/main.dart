@@ -12,6 +12,9 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await FirebaseAuth.instanceFor(
+      app: Firebase.app(), persistence: Persistence.LOCAL);
+// To change it after initialization, use `setPersistence()`:
   // await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
 
   runApp(MultiProvider(providers: [

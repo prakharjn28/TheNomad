@@ -1,3 +1,4 @@
+import 'package:TheNomad/globalValidation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -8,15 +9,22 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
   final _formKey = GlobalKey<FormState>();
-  bool _isValid = false;
+  final nameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final verifyPassController = TextEditingController();
 
+  bool _isValid = false;
   void _saveForm() {
     setState(() {
       _isValid = _formKey.currentState!.validate();
     });
   }
+
+  void signUp() {}
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +67,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           key: _formKey,
                           child: Column(
                             children: [
-                              makeInput(label: "First name"),
-                              makeInput(label: "Last Name"),
-                              makeInput(label: "Email"),
+                              makeInput(
+                                  controller: nameController,
+                                  label: "First name",
+                                  validation: isNameValid),
+                              makeInput(
+                                  controller: lastNameController,
+                                  validation: isLastNameValid,
+                                  label: "Last Name"),
+                              makeInput(
+                                  controller: emailController,
+                                  validation: isEmailValid,
+                                  label: "Email"),
                               makeInput(label: "Password", obsureText: true),
                               makeInput(
                                   label: "Confirm Pasword", obsureText: true)
@@ -109,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
-Widget makeInput({label, obsureText = false}) {
+Widget makeInput({controller, label, obsureText = false, validation}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -122,7 +139,9 @@ Widget makeInput({label, obsureText = false}) {
       const SizedBox(
         height: 5,
       ),
-      TextField(
+      TextFormField(
+        validator: (value) => validation(value),
+        controller: controller,
         obscureText: obsureText,
         decoration: const InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 15),
