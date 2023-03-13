@@ -52,7 +52,7 @@ class Routes {
       ),
       GoRoute(
         path: search,
-        builder: (context, state) => const MySearchPage(title: _title),
+        builder: (context, state) => const MySearchPage(),
       ),
       GoRoute(
         path: locationDetails,
@@ -63,6 +63,7 @@ class Routes {
         builder: (context, state) => const MyApp(),
       ),
       GoRoute(
+          name: "details",
           path: details,
           builder: (context, state) {
             return DetailsPage(title: state.queryParams['states']);
