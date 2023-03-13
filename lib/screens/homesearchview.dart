@@ -14,6 +14,7 @@ import 'package:TheNomad/models/destination_model.dart';
 import 'package:flutter/material.dart';
 import 'package:TheNomad/screens/details.dart';
 import 'package:go_router/go_router.dart';
+import 'package:TheNomad/provider/destinationProvider.dart';
 
 class MySearchPage extends StatefulWidget {
   const MySearchPage({super.key});
@@ -23,8 +24,8 @@ class MySearchPage extends StatefulWidget {
 }
 
 class _MySearchPageState extends State<MySearchPage> {
-  List<Destination> _places = Destination.getPlaces();
-  List<Destination> _favoritePlaces = Destination.getHighRatingPlaces();
+  List<Destination> _places = DestinationProvider.places;
+  List<Destination> _favoritePlaces = DestinationProvider.getHighRatingPlaces();
 
   void _runFilter(String keyword) {
     List<Destination> results = [];
@@ -252,8 +253,7 @@ class _MySearchPageState extends State<MySearchPage> {
                         padding: EdgeInsets.only(bottom: 15.0),
                         child: GestureDetector(
                           onTap: () {
-                            context
-                                .push('/details?states=${_places[index].name}');
+                            context.push('/locationDetails?states=$index');
                           },
                           child: Row(
                             children: [

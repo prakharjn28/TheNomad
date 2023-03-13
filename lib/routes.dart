@@ -35,10 +35,8 @@ class Routes {
   static const String details = '/details';
   static const String locationDetails = '/locationDetails';
 
-  static const _title = "Searching Page";
-
   static final routes = GoRouter(
-    initialLocation: status ? home : login,
+    initialLocation: status ? search : login,
     routes: [
       GoRoute(
         name: login,
@@ -56,7 +54,9 @@ class Routes {
       ),
       GoRoute(
         path: locationDetails,
-        builder: (context, state) => const LocationDetail(),
+        builder: (context, state) => LocationDetail(
+          index: state.queryParams['states'],
+        ),
       ),
       GoRoute(
         path: home,

@@ -29,7 +29,7 @@ class _LoginState extends State<Login> {
   void loginUser() async {
     var loginProvider = Provider.of<LoginProvider>(context, listen: false);
     _saveForm();
-    context.pushReplacement('/locationDetails');
+    context.pushReplacement('/search');
     // if (_isValid) {
     //   LoginModel user = LoginModel(
     //       email: emailController.text, password: passwordController.text);
