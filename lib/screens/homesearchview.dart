@@ -30,7 +30,7 @@ class _MySearchPageState extends State<MySearchPage> {
     List<Destination> results = [];
     if (keyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      results = _places;
+      _places = Destination.getPlaces();
     } else {
       results = _places
           .where(
@@ -43,7 +43,9 @@ class _MySearchPageState extends State<MySearchPage> {
       _places = results;
       if (_places.isNotEmpty) {
         print(_places[0].name);
+  
       } else {
+        _places = Destination.getPlaces();
         print("No place found!");
       }
     });
