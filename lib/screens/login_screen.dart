@@ -1,5 +1,7 @@
+import 'package:TheNomad/globalValidation.dart';
 import 'package:TheNomad/models/loginModel.dart';
 import 'package:TheNomad/provider/loginProvider.dart';
+import 'package:TheNomad/widgets/google_sign_in_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +14,7 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginState extends State<Login> with InputValidationMixin {
   static const String _title = "Nomad";
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -29,31 +31,30 @@ class _LoginState extends State<Login> {
   void loginUser() async {
     var loginProvider = Provider.of<LoginProvider>(context, listen: false);
     _saveForm();
-    context.pushReplacement('/search');
-    // if (_isValid) {
-    //   LoginModel user = LoginModel(
-    //       email: emailController.text, password: passwordController.text);
-    //   loginProvider.signInUser(user).then((e) => {
-    //         if (e == "Success")
-    //           {context.pushReplacement('/search')}
-    //         else
-    //           {
-    //             print("err $e"),
-    //             showDialog<String>(
-    //               context: context,
-    //               builder: (BuildContext context) => AlertDialog(
-    //                 title: Text(e.toString()),
-    //                 actions: <Widget>[
-    //                   TextButton(
-    //                     onPressed: () => Navigator.pop(context, 'OK'),
-    //                     child: const Text('OK'),
-    //                   ),
-    //                 ],
-    //               ),
-    //             )
-    //           }
-    //       });
-    // }
+    if (_isValid) {
+      LoginModel user = LoginModel(
+          email: emailController.text, password: passwordController.text);
+      loginProvider.signInUser(user).then((e) => {
+            if (e == "Success")
+              {context.pushReplacement('/search')}
+            else
+              {
+                print("err $e"),
+                showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: Text(e.toString()),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'OK'),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                )
+              }
+          });
+    }
   }
 
   void logout() {
@@ -63,7 +64,9 @@ class _LoginState extends State<Login> {
 
   void _saveForm() {
     setState(() {
-      _isValid = _formKey.currentState!.validate();
+      _isValid = _formKey.currentState!.validate() &&
+          isEmailValid(emailController.text) &&
+          isPasswordValid(passwordController.text);
     });
   }
 
@@ -108,11 +111,10 @@ class _LoginState extends State<Login> {
                           // Check if this field is empty
                           if (value == null || value.isEmpty) {
                             return 'Please enter email';
+                          } else if (!isEmailValid(value)) {
+                            return 'Please enter a valid email address';
                           }
-                          // using regular expression
-                          if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                            return "Please enter a valid email address";
-                          }
+
                           // the email is valid
                           return null;
                         },
@@ -131,7 +133,7 @@ class _LoginState extends State<Login> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please enter password';
-                          } else if (value.length < 8) {
+                          } else if (!isPasswordValid(value)) {
                             return 'Password should be minimum 8 charcters';
                           }
                           return null;
@@ -170,6 +172,8 @@ class _LoginState extends State<Login> {
                 },
               ),
             ),
+            const SizedBox(height: 16),
+            const GoogleSignInButton(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
