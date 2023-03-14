@@ -57,6 +57,10 @@ class _LoginState extends State<Login> with InputValidationMixin {
     }
   }
 
+  // void loginViaGoogle() async {
+  //   var loginProvider = Provider.of<LoginProvider>(context, listen: false);
+  // }
+
   void logout() {
     var loginProvider = Provider.of<LoginProvider>(context, listen: false);
     loginProvider.signOut();

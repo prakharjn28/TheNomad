@@ -57,6 +57,7 @@ class _MapButtonState extends State<MapButton> {
 
   @override
   Widget build(BuildContext context) {
+    LatLng loca = widget.location;
     return Stack(children: [
       GoogleMap(
         initialCameraPosition: CameraPosition(
@@ -71,7 +72,7 @@ class _MapButtonState extends State<MapButton> {
         markers: {
           Marker(
             markerId: MarkerId('marker'),
-            position: LatLng(47.62067622253376, -122.34926667301272),
+            position: LatLng(loca.latitude, loca.longitude),
             icon: BitmapDescriptor.defaultMarker,
           ),
         },

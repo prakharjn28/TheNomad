@@ -170,7 +170,7 @@ class _MySearchPageState extends State<MySearchPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   context.push(
-                                      "/details?states=${_favoritePlaces[index].name}");
+                                      "/locationDetails?states=${_favoritePlaces[index].id}");
                                 },
                                 child: Stack(
                                   children: [

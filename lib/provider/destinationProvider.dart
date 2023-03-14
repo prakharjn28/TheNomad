@@ -11,8 +11,8 @@ class DestinationProvider extends ChangeNotifier {
         "1483 Alaskan Way, Pier 59, Seattle, WA 98101",
         4.4,
         "https://images.seattletimes.com/wp-content/uploads/2019/12/12062019_aquarium_130748.jpg?d=1560x1067",
-        47.62067622253376,
-        -122.34926667301272),
+        47.607512297636994,
+        -122.34294507301328),
     Destination(
         1,
         "Space Needle",
