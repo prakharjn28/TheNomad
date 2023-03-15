@@ -45,16 +45,16 @@ class _MySearchPageState extends State<MySearchPage> {
   void _runFilter(String keyword) {
     var location = Provider.of<DestinationProvider>(context, listen: false);
     List<Destination> results = [];
-    if (keyword.isEmpty) {
-      results = location.places;
-      // if the search field is empty or only contains white-space, we'll display all users
-    } else {
-      results = _places
-          .where(
-              (user) => user.name.toLowerCase().contains(keyword.toLowerCase()))
-          .toList();
-      // we use the toLowerCase() method to make it case-insensitive
-    }
+    // if (keyword.isEmpty) {
+    //   // if the search field is empty or only contains white-space, we'll display all users
+    //   results = _places;
+    // } else {
+    //   results = _places
+    //       .where(
+    //           (user) => user.name.toLowerCase().contains(keyword.toLowerCase()))
+    //       .toList();
+    //   // we use the toLowerCase() method to make it case-insensitive
+    // }
 
     setState(() {
       _places = results;
