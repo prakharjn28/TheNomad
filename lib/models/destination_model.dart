@@ -1,22 +1,27 @@
 class Destination {
-  final int id;
+  final String id;
   final String name;
   final String description;
-  final String shortLocation;
-  final String longLocation;
-  final double rating;
-  final String imageUrl;
+  final List<String> images;
   final double latitude;
   final double longitude;
 
-  Destination(
-      this.id,
-      this.name,
-      this.description,
-      this.shortLocation,
-      this.longLocation,
-      this.rating,
-      this.imageUrl,
-      this.latitude,
+  Destination(this.id, this.name, this.description, this.images, this.latitude,
       this.longitude);
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'images': images,
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Destination{id: $id, name: $name, description: $description, images: $images, latitude: $latitude, longitude: $longitude}';
+  }
 }

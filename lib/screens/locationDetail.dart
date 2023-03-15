@@ -15,7 +15,9 @@ class LocationDetail extends StatefulWidget {
 class _LocationDetailState extends State<LocationDetail> {
   @override
   Widget build(BuildContext context) {
-    var destinationData = DestinationProvider.places[int.parse(widget.index!)];
+    var destinationData =
+        Provider.of<DestinationProvider>(context, listen: false);
+    var locationData = destinationData.places[int.parse(widget.index!)];
 
     return MultiProvider(
       providers: [
@@ -23,25 +25,25 @@ class _LocationDetailState extends State<LocationDetail> {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: Text(destinationData.name),
+          title: Text(locationData.name),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(destinationData.imageUrl,
+            Image.network(locationData.images[0],
                 fit: BoxFit.cover, width: 1000.0),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                destinationData.name,
+                locationData.name,
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                destinationData.description,
+                locationData.description,
                 style: TextStyle(
                   fontSize: 18,
                 ),
@@ -51,8 +53,8 @@ class _LocationDetailState extends State<LocationDetail> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: MapButton(
-                  location: LatLng(
-                      destinationData.latitude, destinationData.longitude),
+                  location:
+                      LatLng(locationData.latitude, locationData.longitude),
                 ),
               ),
             ),

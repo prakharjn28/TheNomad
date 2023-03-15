@@ -1,3 +1,4 @@
+import 'package:TheNomad/provider/destinationProvider.dart';
 import 'package:TheNomad/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -19,6 +20,7 @@ Future<void> main() async {
 
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_) => LoginProvider()),
+    ChangeNotifierProvider(create: (_) => DestinationProvider())
     // We can add more providers as we move forward with the app.
   ], child: const MyApp()));
 }

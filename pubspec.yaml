@@ -46,6 +46,7 @@ dependencies:
   url_launcher: ^6.1.10
   carousel_slider: ^4.2.1
   google_sign_in: ^6.0.2
+  cloud_firestore: ^4.4.4
 
 dev_dependencies:
   flutter_test:
