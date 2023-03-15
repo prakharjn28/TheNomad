@@ -11,6 +11,7 @@ searching activity
 */
 
 import 'package:TheNomad/models/destination_model.dart';
+import 'package:TheNomad/provider/loginProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:TheNomad/screens/details.dart';
 import 'package:go_router/go_router.dart';
@@ -66,6 +67,12 @@ class _MySearchPageState extends State<MySearchPage> {
     });
   }
 
+  void signout() async {
+    var loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    await loginProvider.signOut();
+    GoRouter.of(context).go('/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -94,7 +101,7 @@ class _MySearchPageState extends State<MySearchPage> {
                 ],
               ),
               IconButton(
-                  onPressed: (() {}),
+                  onPressed: signout,
                   icon: Icon(
                     Icons.logout,
                     color: Colors.grey,

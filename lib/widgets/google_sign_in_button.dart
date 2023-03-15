@@ -1,4 +1,7 @@
+import 'package:TheNomad/provider/loginProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   const GoogleSignInButton({super.key});
@@ -9,6 +12,13 @@ class GoogleSignInButton extends StatefulWidget {
 
 class _GoogleSignInButtonState extends State<GoogleSignInButton> {
   bool _isSigningIn = false;
+
+  void loginViaGoogle() async {
+    var loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    loginProvider
+        .signInWithGoogle()
+        .then((e) => {context.pushReplacement('/search')});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +41,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 setState(() {
                   _isSigningIn = true;
                 });
-
-                // TODO: Add method call to the Google Sign-In authentication
-
+                loginViaGoogle();
                 setState(() {
                   _isSigningIn = false;
                 });

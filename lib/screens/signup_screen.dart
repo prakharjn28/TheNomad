@@ -1,6 +1,8 @@
 import 'package:TheNomad/globalValidation.dart';
+import 'package:TheNomad/provider/loginProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -11,6 +13,9 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
   final _formKey = GlobalKey<FormState>();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   bool _isValid = false;
@@ -21,7 +26,34 @@ class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
     });
   }
 
-  void signUp() {}
+  void signUp() {
+    var loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      // context.goNamed('loginScreen');
+      loginProvider
+          .signUpNewUser(_emailController.text, _passwordController.text)
+          .then((e) => {
+                if (e == "Success")
+                  {context.pushReplacement('/search')}
+                else
+                  {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Text(e.toString()),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'OK'),
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    )
+                  }
+              });
+    }
+  }
 
   @override
   void dispose() {
@@ -71,17 +103,22 @@ class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
                           key: _formKey,
                           child: Column(
                             children: [
-                              makeInput(label: "First name"),
-                              makeInput(label: "Last Name"),
-                              makeInput(label: "Email"),
                               makeInput(
-                                label: "Password",
-                                obsureText: true,
-                              ),
+                                  label: "First name",
+                                  controller: _firstNameController),
                               makeInput(
-                                label: "Confirm Password",
-                                obsureText: true,
-                              ),
+                                  label: "Last Name",
+                                  controller: _lastNameController),
+                              makeInput(
+                                  label: "Email", controller: _emailController),
+                              makeInput(
+                                  label: "Password",
+                                  obsureText: true,
+                                  controller: _passwordController),
+                              makeInput(
+                                  label: "Confirm Password",
+                                  obsureText: true,
+                                  controller: _confirmPasswordController),
                             ],
                           ),
                         )),
@@ -96,12 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
                           'Create account',
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            context.goNamed('loginScreen');
-                          }
-                        },
+                        onPressed: signUp,
                       ),
                     ),
                     const SizedBox(
@@ -130,8 +162,10 @@ class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
     );
   }
 
-  Widget makeInput({label, obsureText = false}) {
-    final controller = TextEditingController();
+  Widget makeInput(
+      {required String label,
+      bool obsureText = false,
+      TextEditingController? controller}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -150,7 +184,7 @@ class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
             contentPadding: EdgeInsets.symmetric(horizontal: 15),
             border: OutlineInputBorder(),
           ),
-          controller: label == 'Password' ? controller : null,
+          controller: controller,
           validator: (value) {
             if (label == 'First name') {
               return isNameValid(value!)
@@ -167,7 +201,7 @@ class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
                   ? null
                   : 'Password should be at least 6 characters';
             } else if (label == 'Confirm Password') {
-              final password = controller.text;
+              final password = _passwordController.text;
               return isVerifyPasswordValid(value!, password)
                   ? null
                   : 'Passwords do not match';
