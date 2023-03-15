@@ -26,21 +26,27 @@ class LoginProvider extends ChangeNotifier {
     return error;
   }
 
-  // Future<FirebaseUser> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-  //   GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    print(" userr $googleUser");
 
-  //   GoogleSignInAuthentication googleSignInAuthentication =
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
-  //   await googleSignInAccount.authentication;
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
 
-  //   AuthCredential credential = GoogleAuthProvider.getCredential(
+    print("cred $credential");
 
-  //     accessToken: googleSignInAuthentication.accessToken,
-
-  //     idToken: googleSignInAuthentication.idToken,
-
-  //   );
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
   signUpNewUser(String email, String password) async {
     var err;
@@ -63,6 +69,7 @@ class LoginProvider extends ChangeNotifier {
       err = e;
       print(e);
     }
+    notifyListeners();
     return err;
   }
 
