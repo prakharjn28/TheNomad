@@ -46,11 +46,6 @@ class DestinationProvider extends ChangeNotifier {
         -122.34926667301272),
   ];
 
-  //get places that are popular and liked the most.
-  // static List<Destination> getHighRatingPlaces() {
-  //   return places.where((element) => element.id.isNotEmpty).toList();
-  // }
-
   Future<void> getList() async {
     var db = FirebaseFirestore.instance;
     var collectionRef = db.collection("nearbyPlaces");
